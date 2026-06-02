@@ -1,4 +1,6 @@
+
 <template>
+  
   <header>
     <div class = "left">
       <img src="/photo/radix-icons_hamburger-menu.png" alt="меню">
@@ -24,8 +26,7 @@ header{
   margin-top: 40px;
   display: flex;
   justify-content: space-between;
-  align-items: center; /* Чтобы бургер и лого были строго на одной линии по вертикали */
-  padding: 0 70px;     /* Добавь отступы по бокам, чтобы бургер не лип к самому краю экрана */
+  align-items: center; 
 }
 .center{
   display: flex;
@@ -34,14 +35,14 @@ header{
 }
 .left{
   display: flex;
-  width: 50px;         /* Даем левому блоку фиксированное место */
+  width: 50px;     
 }
 .left img{
   width: 50%;
   height: 70%;
 }
 .center img{
-  width: 50%;
+  width: 60%;
   height: auto;
 
 }
@@ -58,4 +59,55 @@ header{
 
 
 
+</style>
+
+<style> 
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+* {
+  font-family: 'Roboto Condensed', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+header {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+  padding: 0 70px;     
+}
+
+.center {
+  display: flex;
+  justify-content: center; 
+}
+
+.left {
+  display: flex;
+  width: 50px;         
+}
+
+.left img {
+  width: 50%;
+  height: 70%;
+}
+
+.center img {
+  width: 60%;
+  height: auto;
+}
+
+.right {
+  display: flex;
+  gap: 20px;
+  width: 50px;
+}
+
+.right img {
+  width: 50%;
+  height: 70%;
+}
 </style>
