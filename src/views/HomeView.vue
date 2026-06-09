@@ -12,28 +12,28 @@
     </div>
   </div>
 
-  <div class="about_us">
+  <div id="about_us" class="about_us" >
     <div class="stroke">
       <img src="/photo/stroke.png" alt="О нас">
       <div class="text_overlay">
         <div class="headind_ab_us">О БРЕНДЕ</div>
         <div class="description_ab_us">
-          <p>Основная цель бренда одежды MELTON — создавать базовую, качественную и стильную
-            одежду за доступную цену.</p>
+          <p>Основная цель бренда одежды MELTON — создавать базовую, качественную и стильную
+            одежду за доступную цену.</p>
 
-          <p>Бренд транслирует эстетику основательницы Сони Мельтон. Один из самых важных элементов концепции бренда —
+          <p>Бренд транслирует эстетику основательницы Сони Мельтон. Один из самых важных элементов концепции бренда —
             это
-            цвет изделий. Все изделия выполнены в теплой бежево-коричневой палитреи идеально сочетаются друг с другом,
-            создавая красивый и удобный повседневный гардероб. </p>
+            цвет изделий. Все изделия выполнены в теплой бежево-коричневой палитреи идеально сочетаются друг с другом,
+            создавая красивый и удобный повседневный гардероб. </p>
 
-          <p>MELTON — это одежда для девушек, которые хотят выглядеть эффектно и привлекательно, но при этом чувствовать
+          <p>MELTON — это одежда для девушек, которые хотят выглядеть эффектно и привлекательно, но при этом чувствовать
             себя максимально комфортно. </p>
 
-          <p>Огромное внимание основательница бренда уделяет качеству ткани, чтобы она была мягкая, приятная к телу
-            и в то же время сохраняла свой первоначальный вид после множества стирок.</p>
+          <p>Огромное внимание основательница бренда уделяет качеству ткани, чтобы она была мягкая, приятная к телу
+            и в то же время сохраняла свой первоначальный вид после множества стирок.</p>
 
-          Также не менее значимым приоритетом является посадка изделий. Для нас очень важно, чтобы каждая вещь
-          не сдавливала кожу, красиво подчеркивала фигуру и была крайне комфортна.
+          Также не менее значимым приоритетом является посадка изделий. Для нас очень важно, чтобы каждая вещь
+          не сдавливала кожу, красиво подчеркивала фигуру и была крайне комфортна.
         </div>
 
       </div>
@@ -52,7 +52,8 @@
 
         </div>
         <div class="header_right">
-          <a href="#" class="catalog_link">В каталог &rarr;</a>
+          <router-link to="/catalog" class="catalog_link">В каталог &rarr;</router-link>
+
         </div>
       </div>
 
@@ -119,28 +120,31 @@
     </div>
   </section>
 
-  <section class="contact_section">
+  <section id="contact_section" class="contact_section">
     <h2 class="contact_title">Связаться с нами</h2>
+    <!-- @submit — ловит клик по кнопке отправки нажатие Enter -->
+    <!-- .prevent — это сокращение во Vue для event.preventDefault(). -->
+    <!-- Оно блокирует перезагрузку страницы, чтобы сайт работал быстро и без дёрганий -->
     <form class="contact_form" @submit.prevent="Submit">
       <div class="all_form">
         <div class="form_grid">
           <div class="form_group">
             <label for="firstName">Имя*</label>
-            <input type="text" id="firstName" required class="form_input">
+            <input type="text" id="firstName" v-model="firstName" required class="form_input">
           </div>
           <div class="form_group">
             <label for="lastName">Фамилия</label>
-            <input type="text" id="lastName" class="form_input">
+            <input type="text" id="lastName" v-model="lastName" class="form_input">
           </div>
 
           <div class="form_group">
             <label for="email">Email*</label>
-            <input type="email" id="email" required class="form_input">
+            <input type="email" id="email" v-model="email" required class="form_input">
           </div>
 
           <div class="form_group">
             <label for="phone">Номер телефона</label>
-            <input type="tel" id="phone" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+            <input type="tel" id="phone" v-model="phone" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
               class="form_input">
           </div>
 
@@ -148,7 +152,7 @@
 
         <div class="form_group message_group">
           <label for="message">Напишите нам сообщение тут:</label>
-          <textarea id="message" rows="6" class="form_textarea"></textarea>
+          <textarea id="message" v-model="message" rows="6" class="form_textarea"></textarea>
         </div>
       </div>
 
@@ -163,14 +167,13 @@
     </form>
   </section>
 </template>
-@submit — ловит клик по кнопке отправки нажатие Enter
-.prevent — это сокращение во Vue для event.preventDefault().
-Оно блокирует перезагрузку страницы, чтобы сайт работал быстро и без дёрганий
-/* key - директива позволяет точно знать к какому элементу обращается
-двоеточие- логика JS*/
+
+<!-- /* key - директива позволяет точно знать к какому элементу обращается -->
+<!-- двоеточие- логика JS*/ -->
 <script setup>//не нужно писать переменную и ретернать в штмл
 import { ref } from 'vue' //функция превращает переменные в реактивные для изменения на сайте
 
+// --- ЛОГИКА СЛАЙДЕРА ---
 const images = ref([
   '/photo/main_photo.png',
   '/photo/main_photo.png',
@@ -194,8 +197,58 @@ function prevSlide() {
     currentIdx.value = images.value.length - 1
   }
 }
+
+// --- ЛОГИКА ДЛЯ РАБОТЫ С БЭКЕНДОМ ---
+
+// Создаем реактивные переменные для полей формы
+const firstName = ref('')
+const lastName = ref('')
+const email = ref('')
+const phone = ref('')
+const message = ref('')
+
+// Функция отправки формы
+async function Submit() {
+  // На всякий случай заменяем base_url на адрес хостинга, если локально бэк не запущен
+  const url = 'https://sites.creatrix-digital.ru/clothes-store/api/v1/contacts'
+  
+  // Собираем объект в точном соответствии с тем, что требует твой Postman
+  const formData = {
+    first_name: firstName.value,
+    last_name: lastName.value,
+    email: email.value,
+    phone: phone.value,
+    message: message.value
+  }
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+
+    if (response.ok) {
+      alert('Сообщение успешно отправлено на бэкенд!')
+      // Очищаем форму после успешной отправки
+      firstName.value = ''
+      lastName.value = ''
+      email.value = ''
+      phone.value = ''
+      message.value = ''
+    } else {
+      alert('Ошибка при отправке: ' + response.statusText)
+    }
+  } catch (error) {
+    console.error('Ошибка сети:', error)
+    alert('Не удалось связаться с сервером')
+  }
+}
 </script>
-/* & знак старта спец кода larr left arrow ;- знак финиша спец кода*/
+
+<!-- /* & знак старта спец кода larr left arrow ;- знак финиша спец кода*/ -->
 <style scoped>
 .main_ph {
   display: flex;
@@ -214,7 +267,6 @@ function prevSlide() {
   height: auto;
   display: block;
   /*img- строчно-блочной тег. браузер думает что это буква и оставляет зазор без block */
-
 }
 
 /* стили стрелок */
@@ -237,6 +289,7 @@ function prevSlide() {
   cursor: pointer;
   display: flex;
   justify-content: center;
+  align-items: center;
 
   z-index: 5;
   /* Чтобы стрелки были поверх фото */
@@ -287,7 +340,6 @@ function prevSlide() {
   background-color: #6e5545;
 }
 
-
 .about_us {
   margin-top: 150px;
   display: flex;
@@ -299,7 +351,6 @@ function prevSlide() {
   width: calc(100% - 150px);
   box-sizing: border-box;
   /* паддинг 0 50 не расширяет блок больше экрана а забирает внутри эти 100%*/
-
 }
 
 .headind_ab_us {
@@ -310,9 +361,8 @@ function prevSlide() {
 
 .description_ab_us {
   color: #584a40;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 280;
-
 }
 
 .text_overlay {
@@ -321,7 +371,6 @@ function prevSlide() {
   left: 0;
   width: 100%;
   height: 100%;
-
   padding: 40px 50px;
   box-sizing: border-box;
   /* Чтобы паддинги не увеличивали размер блока */
@@ -331,7 +380,6 @@ function prevSlide() {
   position: relative;
   max-width: 60%;
   /*если оставить 120% то дочки строк и вумен блок  эбаут_ас изза display flex будут сжимать себя изза границ экрана */
-
 }
 
 .stroke img {
@@ -386,13 +434,11 @@ function prevSlide() {
   /* Популярное слева, ссылка справа */
   max-width: 1200px;
   /* совпадает с products_grid */
-  margin: 0 auto 40px;
+  margin: 90px auto 40px;
   /* центрируем + отступ до карточек */
   padding: 0;
   box-sizing: border-box;
 }
-
-
 
 .catalog_link {
   text-decoration: none;
@@ -400,10 +446,7 @@ function prevSlide() {
   font-size: 15px;
   font-weight: 450;
   margin-top: 15px;
-  /* Небольшая подгонка по вертикали, если нужно */
 }
-
-
 
 .sect_pop {
   margin: 0;
@@ -434,8 +477,8 @@ function prevSlide() {
   /* Запрещаем перенос текста */
 }
 
-.header_right{
-  
+.header_right {
+  transform: translateX(-50%);
 }
 
 .sect_desc {
@@ -444,7 +487,6 @@ function prevSlide() {
   font-weight: 400;
   color: #584a40;
 }
-
 
 .img_wrapper {
   position: relative;
@@ -467,7 +509,6 @@ function prevSlide() {
   display: inline-block;
   cursor: pointer;
 }
-
 
 .white {
   background-color: #ffffff;
@@ -531,7 +572,6 @@ function prevSlide() {
   font-size: 15px;
   border: 1px solid #584a40;
   background: none;
-
 }
 
 .btn_cart {
@@ -573,7 +613,6 @@ function prevSlide() {
   gap: 40px 160px;
   width: 100%;
   box-sizing: border-box;
-
 }
 
 .form_group {
@@ -581,37 +620,218 @@ function prevSlide() {
   flex-direction: column;
   gap: 8px;
   width: 100%;
-
 }
 
 .message_group {
   margin-top: 50px;
   width: 100%;
-
 }
 
 .form_textarea {
   display: flex;
   width: 100%;
   box-sizing: border-box;
-  resize: vertical;
+  resize: none;
   margin-left: 0;
-  height: 130px;
+  border: 1.75px solid #584a40;
+  height: 200px; 
+  min-height: 200px;
 }
 
 .form_input {
   width: 100%;
   box-sizing: border-box;
+  border: none;
+  border-bottom: 1.75px solid #584a40; 
+  border-left: 1.75px solid #584a40;
+  border-right: 1.75px solid #584a40;
 }
 
-.all_form {
+/*.all_form {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 100%; нах не надо
   box-sizing: border-box;
+}*/
+
+.policy_link {
+  color: #584a40;
+}
+
+.form_agreement {
+  color: #584a40;
+}
+
+.form_actions {
+  display: flex;
+  justify-content: center;
+  width: 100%;     
 }
 
 .btn_submit {
   margin-top: 40px;
+  width: 30%;
+  height: 47px;
+  color: #584a40;
+  font-size: 15px;
+  border: 1.75px solid #584a40;
+  background: none;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+
+/* --- ПОДГОНКА ТЕКСТА ДЛЯ МОНИТОРОВ ОТ 1440px ДО 1920px --- */
+@media screen and (min-width: 1440px) {
+  /* Увеличиваем заголовок "О БРЕНДЕ" */
+  .headind_ab_us {
+    font-size: 48px; /* Было 42px */
+    margin-bottom: 24px; /* Делаем красивый отступ до абзацев */
+  }
+
+  /* Делаем основной текст крупнее и читабельнее */
+  .description_ab_us {
+    font-size: 21px; /* Было 18px */
+    line-height: 1.55; /* Добавляем воздуха между строками, чтобы текст не слипался */
+  }
+
+  /* Корректируем отступы внутри рамки, чтобы увеличенный текст идеально помещался */
+  .text_overlay {
+    padding: 55px 65px; /* Чуть увеличили, чтобы рамка дышала */
+  }
+}
+
+
+/* --- СТАБИЛЬНЫЙ МЕДИА-ЗАПРОС ДЛЯ МОБИЛОК (ДО 768px) --- */
+@media screen and (max-width: 768px) {
+  .about_us {
+    flex-direction: column; /* Элементы строго друг под другом */
+    margin-top: 40px;
+    margin-left: 0; /* Сбрасываем десктопный отступ */
+    padding: 0 20px;
+    width: 100%;
+    gap: 20px;
+    box-sizing: border-box;
+    align-items: center;
+  }
+
+  /* Контейнер рамки */
+  .stroke {
+    max-width: 100%;
+    width: 100%;
+    position: relative;
+    border: 1.5px solid #584a40; /* Делаем аккуратную адаптивную рамку вместо картинки */
+    border-radius: 20px; /* Скругляем углы */
+  }
+
+  /* Скрываем саму картинку stroke.png на мобилках, чтобы она не сплющивала текст */
+  .stroke > img {
+    display: none;
+  }
+
+  /* Текст теперь внутри рамки распределяется свободно и сам растягивает блок по высоте */
+  .text_overlay {
+    position: relative; /* Выводим из абсолютного позиционирования! */
+    padding: 25px 20px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .headind_ab_us {
+    font-size: 26px;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+
+  .description_ab_us {
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  /* Блок с девушкой — делаем его компактным и независимым ниже текста */
+  .women_block {
+    width: 100%;
+    max-width: 290px; /* Ограничиваем максимальную ширину, чтобы фотка не была огромной */
+    margin-left: 0; /* Убираем минусовые маргины */
+    top: 0; /* Сбрасываем уезжание вверх */
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  /* Тень плавно ложится под девушку */
+  .img_shade {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Девушка накладывается ровно сверху на тень */
+  .img_girl {
+    position: absolute;
+    top: 15px; /* Небольшое смещение для эффекта объема */
+    left: -15px;
+    width: 100%;
+    height: auto;
+    z-index: 5;
+  }
+
+  /* --- ОСТАЛЬНЫЕ БЛОКИ (ПОПУЛЯРНОЕ И ФОРМА) --- */
+  .popular_header {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin: 50px auto 25px;
+  }
+
+  .sect_pop, .sect_desc {
+    font-size: 30px;
+    text-align: center;
+  }
+
+  .header_center {
+    position: static;
+    transform: none;
+    flex-direction: column;
+  }
+
+  .header_right {
+    transform: none;
+  }
+
+  .products_grid {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .product_card {
+    width: 100%;
+    max-width: 290px;
+  }
+
+  .product_img, .product_actions, .product_info {
+    width: 100%;
+  }
+
+  .contact_title {
+    font-size: 32px;
+    margin-top: 40px;
+  }
+
+  .form_grid {
+    grid-template-columns: 1fr; /* Поля формы встают в одну колонку */
+    gap: 20px;
+  }
+
+  .form_textarea {
+    height: 140px;
+    min-height: 140px;
+  }
+
+  .btn_submit {
+    width: 100%;
+    max-width: 290px;
+  }
 }
 </style>
